@@ -4,6 +4,7 @@ const style = {
     background: 'transparent',
     padding: '10px'
 }
+
 // 需要加载的js文件
 const scripts = [
     '//d3js.org/d3-interpolate.v1.min.js',
