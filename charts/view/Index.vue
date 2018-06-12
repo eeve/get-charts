@@ -25,13 +25,13 @@
 </template>
 
 <script>
-import * as Babel from '@babel/standalone';
-import Promise from 'bluebird';
-import EChart from '../components/Echart';
-import EditorBox from '../components/EditorBox';
-import TemplateModal from './TemplateModal';
-import fullscreen_icon from '../images/fullscreen.svg'; // eslint-disable-line camelcase
-import fullscreen_exit_icon from '../images/fullscreen-exit.svg'; // eslint-disable-line camelcase
+import * as Babel from '@babel/standalone'
+import Promise from 'bluebird'
+import EChart from '../components/Echart'
+import EditorBox from '../components/EditorBox'
+import TemplateModal from './TemplateModal'
+import fullscreen_icon from '../images/fullscreen.svg' // eslint-disable-line camelcase
+import fullscreen_exit_icon from '../images/fullscreen-exit.svg' // eslint-disable-line camelcase
 export default {
   components: {
     EChart,
@@ -61,13 +61,11 @@ const scripts = [
     // '//d3js.org/d3-scale.v2.min.js'
 ]
 
-const data = {
-
-}
-
 // 必须定义此函数，并返回option配置对象
 function getOptions () {
-  return data
+  return {
+
+  }
 }
 
 // 在切换示例时清理内存（定时器，全局大对象）
@@ -111,7 +109,7 @@ function destory () {
       }
       window.chart = this.chart
       window.echarts = this.chart.$echarts
-      window.done = async (style, scripts, getOptions, destory) => {
+      window.echarts.util._zd = async (style, scripts, getOptions, destory) => {
         await Promise.map(
           scripts || [],
           url => {
@@ -132,10 +130,13 @@ function destory () {
         }
       }
       try {
-        const script = `(function(){
+        const script = `(function(window){
+                    const alert = function() {}
+                    const location = function () {}
+                    const localStorage = function () {}
                     ${this.result};
-                    window.done(style, scripts, getOptions, typeof destory === "undefined" ? null : destory)
-                })()`
+                    echarts.util._zd(typeof style === "undefined" ? {} : style, typeof scripts === "undefined" ? [] : scripts, typeof getOptions === "undefined" ? () => ({}) : getOptions, typeof destory === "undefined" ? null : destory)
+                })({ chart: window.chart, echarts: window.echarts })`
         const babelCode = Babel.transform(script, {
           presets: ['es2015', 'es2016']
         }).code
