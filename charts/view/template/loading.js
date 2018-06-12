@@ -55,21 +55,30 @@ export default {
     return data
   }
 
-  setInterval(function() {
-      if (tips == 100) {
-        tips = 0;
-      } else {
-        ++tips;
-      }
-      window.chart.setOption({
-        title: {
-          text: tips + '%'
-        },
-        series: [{
-          name: 'loading',
-          data: loading()
-        }]
-      })
+  // 清理内存
+  function destory () {
+    // 使用定时器时，请注意释放
+    if (window.interval) {
+      window.clearInterval(window.interval)
+    }
+  }
+
+  destory()
+  window.interval = setInterval(function() {
+    if (tips == 100) {
+      tips = 0;
+    } else {
+      ++tips;
+    }
+    window.chart.setOption({
+      title: {
+        text: tips + '%'
+      },
+      series: [{
+        name: 'loading',
+        data: loading()
+      }]
+    })
   }, 100);
 
   `

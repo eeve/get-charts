@@ -25,20 +25,20 @@
 </template>
 
 <script>
-import * as Babel from "@babel/standalone";
-import Promise from "bluebird";
-import EChart from "../components/Echart";
-import EditorBox from "../components/EditorBox";
-import TemplateModal from "./TemplateModal";
-import fullscreen_icon from "../images/fullscreen.svg"; // eslint-disable-line camelcase
-import fullscreen_exit_icon from "../images/fullscreen-exit.svg"; // eslint-disable-line camelcase
+import * as Babel from '@babel/standalone';
+import Promise from 'bluebird';
+import EChart from '../components/Echart';
+import EditorBox from '../components/EditorBox';
+import TemplateModal from './TemplateModal';
+import fullscreen_icon from '../images/fullscreen.svg'; // eslint-disable-line camelcase
+import fullscreen_exit_icon from '../images/fullscreen-exit.svg'; // eslint-disable-line camelcase
 export default {
   components: {
     EChart,
     EditorBox,
     TemplateModal
   },
-  data() {
+  data () {
     return {
       icon: {
         fullscreen_icon,
@@ -46,7 +46,7 @@ export default {
       },
       realtime: false,
       fullscreen: false,
-      lang: "javascript",
+      lang: 'javascript',
       ready: false,
       result: `
 // 自定义样式
@@ -69,100 +69,111 @@ const data = {
 function getOptions () {
   return data
 }
+
+// 在切换示例时清理内存（定时器，全局大对象）
+function destory () {
+
+}
 `,
       chart: null,
       style: {},
       option: null,
+      destoryFunc: null,
       error: null
-    };
+    }
   },
   watch: {
-    result() {
+    result () {
       if (this.realtime) {
-        this.updateOption();
+        this.updateOption()
       }
     },
-    realtime() {
+    realtime () {
       if (this.realtime === true) {
-        this.updateOption();
+        this.updateOption()
       }
     },
-    error() {
+    error () {
       if (this.error) {
-        console.error(this.error);
+        console.error(this.error)
       }
     }
   },
   methods: {
-    handleReady(chart) {
-      this.chart = chart;
-      this.ready = true;
-      this.updateOption();
+    handleReady (chart) {
+      this.chart = chart
+      this.ready = true
+      this.updateOption()
     },
-    updateOption() {
-      if (!this.ready || this.result.trim() === "") {
-        return;
+    updateOption () {
+      if (!this.ready || this.result.trim() === '') {
+        return
       }
-      window.chart = this.chart;
-      window.echarts = this.chart.$echarts;
-      window.done = async (style, scripts, getOptions) => {
+      window.chart = this.chart
+      window.echarts = this.chart.$echarts
+      window.done = async (style, scripts, getOptions, destory) => {
         await Promise.map(
           scripts || [],
           url => {
-            return jQuery.cachedScript(url);
+            return jQuery.cachedScript(url)
           },
           { concurrency: 20 }
-        );
+        )
         try {
-          this.error = null;
-          this.style = style;
-          this.option = await getOptions();
+          this.error = null
+          this.style = style
+          this.option = await getOptions()
+          this.destoryFunc = destory
           this.$nextTick(() => {
-            this.chart.resize();
-          });
+            this.chart.resize()
+          })
         } catch (err) {
-          this.error = err;
+          this.error = err
         }
-      };
+      }
       try {
         const script = `(function(){
                     ${this.result};
-                    window.done(style, scripts, getOptions)
-                })()`;
+                    window.done(style, scripts, getOptions, typeof destory === "undefined" ? null : destory)
+                })()`
         const babelCode = Babel.transform(script, {
-          presets: ["es2015", "es2016"]
-        }).code;
-        new Function(babelCode)(); // eslint-disable-line no-new-func
+          presets: ['es2015', 'es2016']
+        }).code
+        new Function(babelCode)() // eslint-disable-line no-new-func
       } catch (err) {
-        this.error = err;
+        this.error = err
       }
     },
-    toggle() {
-      this.error = new Error("加载中...");
+    toggle () {
+      this.error = new Error('加载中...')
       setTimeout(() => {
-        this.$refs["fullscreen"].toggle();
-      }, 40);
+        this.$refs['fullscreen'].toggle()
+      }, 40)
     },
-    fullscreenChange(fullscreen) {
-      this.fullscreen = fullscreen;
+    fullscreenChange (fullscreen) {
+      this.fullscreen = fullscreen
       setTimeout(() => {
-        this.error = null;
-      }, 40);
+        this.error = null
+      }, 40)
     },
-    apply() {
-      this.updateOption();
+    apply () {
+      this.updateOption()
     },
-    handleToggleModal() {
-      this.$refs.modal.toggle();
+    handleToggleModal () {
+      this.$refs.modal.toggle()
     },
-    handleChangeActive({ code, icon, name }) {
-      this.result = code;
+    handleChangeActive ({ code, icon, name }) {
+      // 执行销毁逻辑
+      if (this.destoryFunc) {
+        this.destoryFunc()
+      }
+      this.result = code
       if (!this.realtime) {
-        this.updateOption();
+        this.updateOption()
       }
     }
   }
-};
+}
 </script>
 
 <style lang="less" scoped>
