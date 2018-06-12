@@ -1,5 +1,5 @@
 <template>
-  <editor v-model='content' @init='editorInit' :lang='lang' theme='monokai' width='100%' :style='{ "line-height": "14px" }' ></editor>
+  <editor v-model='content' @init='editorInit' :lang='lang' theme='monokai' width='100%' :style='{ "line-height": "12px" }' ></editor>
 </template>
 
 <script>
@@ -37,7 +37,7 @@ export default {
   methods: {
     editorInit (editor) {
       editor.setShowPrintMargin(false)
-      editor.setFontSize(14)
+      editor.setFontSize(12)
       editor.setReadOnly(this.readonly)
       // language extension prerequsite...
       require('brace/ext/language_tools')

@@ -4,6 +4,7 @@
 
 <script>
 import echarts from 'echarts/lib/echarts'
+import 'echarts-gl'
 import 'echarts/lib/chart/scatter'
 import 'echarts/lib/component/tooltip'
 import 'echarts/lib/component/title'
@@ -55,7 +56,7 @@ export default {
   },
   watch: {
     option (val, oldVal) {
-      this.chart.setOption(val, this.oldVal ? true : false)
+      this.chart.setOption(val, true)
     }
   },
   methods: {

@@ -20,6 +20,7 @@
     "axios": "^0.18.0",
     "bluebird": "^3.5.1",
     "echarts": "^4.1.0",
+    "echarts-gl": "^1.1.1",
     "jquery": "1.12.4",
     "lodash": "^4.17.10",
     "resize-detector": "^0.1.6",
