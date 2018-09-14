@@ -1,3 +1,4 @@
+const dataUrl = require('../../data/life-expectancy-table.json')
 export default {
   name: '3D散点图',
   icon: require('../../images/templates/graph-circular.png'),
@@ -16,7 +17,7 @@ const scripts = [
 // 必须定义此函数，并返回option配置对象
 function getOptions () {
   return new Promise((resolve, reject) => {
-    $.getJSON('http://127.0.0.1:8000/life-expectancy-table.json', function (data) {
+    $.getJSON('${dataUrl}', function (data) {
       const symbolSize = 2.5;
       resolve({
         grid3D: {},

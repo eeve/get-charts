@@ -22,7 +22,7 @@ export default new Router({
     },
     {
       name: 'chart',
-      path: '/chart',
+      path: '/chart/:tpl?',
       component: Chart
     }
   ]

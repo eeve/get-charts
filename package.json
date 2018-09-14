@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "dev": "parcel ./index.html -p 2002 --no-cache"
+    "dev": "parcel ./index.html -p 2002"
   },
   "standard": {
     "parser": "babel-eslint",
@@ -41,6 +41,7 @@
     "eslint-plugin-html": "^4.0.3",
     "less": "^3.0.4",
     "parcel-bundler": "^1.8.1",
+    "parcel-plugin-json-url-loader": "^0.1.1",
     "standard": "^11.0.1",
     "vue-template-compiler": "^2.5.16"
   }

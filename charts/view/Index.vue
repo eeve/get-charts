@@ -30,6 +30,7 @@ import Promise from 'bluebird'
 import EChart from '../components/Echart'
 import EditorBox from '../components/EditorBox'
 import TemplateModal from './TemplateModal'
+import templates from './template/index'
 import fullscreen_icon from '../images/fullscreen.svg' // eslint-disable-line camelcase
 import fullscreen_exit_icon from '../images/fullscreen-exit.svg' // eslint-disable-line camelcase
 export default {
@@ -94,6 +95,16 @@ function destory () {
     error () {
       if (this.error) {
         console.error(this.error)
+      }
+    }
+  },
+  beforeMount () {
+    const tpl = this.$route.params.tpl
+    if (tpl) {
+      const res = templates.filter(t => t.name === tpl)
+      if (res.length === 1) {
+        const template = res.pop()
+        this.handleChangeActive(template)
       }
     }
   },

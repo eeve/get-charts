@@ -37,7 +37,8 @@ export default {
   methods: {
     editorInit (editor) {
       editor.setShowPrintMargin(false)
-      editor.setFontSize(12)
+      editor.setFontSize(14)
+      editor.container.style.lineHeight = 1.3
       editor.setReadOnly(this.readonly)
       // language extension prerequsite...
       require('brace/ext/language_tools')
