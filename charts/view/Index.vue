@@ -1,26 +1,26 @@
 <template>
     <div class='wrapper'>
         <div class='editor'>
-          <EditorBox ref='editor' v-model='result' :lang='lang' />
+          <EditorBox ref='editor' v-model='result' :lang='lang'></EditorBox>
           <button class='template-btn btn blue' @click='handleToggleModal'>载入示例</button>
         </div>
         <fullscreen ref='fullscreen' class='chart-wrapper' @change="fullscreenChange">
-            <EChart v-if='!error' class='chart' :option='option' @ready='handleReady' :style='style' />
+            <EChart v-if='!error' class='chart' :option='option' @ready='handleReady' :style='style'></EChart>
             <div v-else class='chart error-info'>
                 <p>{{error.message}}</p>
             </div>
             <button type='button' class='fullscreen-btn' @click="toggle" >
-                <img :src='fullscreen ? icon.fullscreen_exit_icon : icon.fullscreen_icon'>
+                <img :src='fullscreen ? icon.fullscreen_exit_icon : icon.fullscreen_icon'></img>
             </button>
             <div class='controls' v-if='!fullscreen'>
               <label>
-                <input type='checkbox' v-model='realtime'>
+                <input type='checkbox' v-model='realtime'></input>
                 实时更新图表
               </label>
               <button v-if='!realtime' type='button' class='update-btn btn blue' @click="apply" >应用更新</button>
             </div>
         </fullscreen>
-        <template-modal ref='modal' @on-actived='handleChangeActive'/>
+        <template-modal ref='modal' @on-actived='handleChangeActive'></template-modal>
     </div>
 </template>
 

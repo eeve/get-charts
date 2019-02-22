@@ -2,7 +2,7 @@
   <div class='modal modal-template' v-show='show'>
     <div class='title'>选择模板</div>
     <div class='content'>
-      <item class='item' v-for='(t, index) in templates' :key='index' :value='t' :active='index === activeIndex' @click.native='handleClickItem(index)' />
+      <tp-item class='item' v-for='(t, index) in templates' :key='index' :value='t' :active='index === activeIndex' @click.native='handleClickItem(index)'></tp-item>
     </div>
     <div class='btns'>
       <button @click='cancel' class='btn'>关闭</button>
@@ -13,10 +13,10 @@
 
 <script>
 import templates from './template/index'
-import Item from './Item'
+import TpItem from './Item'
 export default {
   components: {
-    Item
+    TpItem
   },
   data () {
     return {

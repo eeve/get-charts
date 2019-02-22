@@ -59,7 +59,7 @@ export default {
   function destory () {
     // 使用定时器时，请注意释放
     if (window.interval) {
-      window.clearInterval(window.interval)
+      clearInterval(window.interval)
     }
   }
 

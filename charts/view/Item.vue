@@ -1,6 +1,6 @@
 <template>
   <div class='template-item' :class='{ active }'>
-    <img class='icon' :src='value.icon' :alt='value.name'>
+    <img class='icon' :src='value.icon' :alt='value.name'></img>
     <p class='name'>{{ value.name }}</p>
   </div>
 </template>

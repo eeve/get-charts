@@ -10,7 +10,7 @@
             <div class="control">
                 <div class="label">显示区域</div>
                 <div class="children">
-                    <check-box v-for='area in config.data' :key='area.name' :label='area.name' v-model='area.checked' :val='area.name' />
+                    <check-box v-for='area in config.data' :key='area.name' :label='area.name' v-model='area.checked' :val='area.name'></check-box>
                     <!-- <label v-for='area in config.data' :key='area.name' class='text-right' style='max-width: 60px;'>
                         <span class="value">{{area.name}}</span>
                         <input type="checkbox" v-model='area.checked' :value='area.name'>
@@ -18,7 +18,7 @@
                 </div>
             </div>
         </control-box>
-        <echart class='chart' ref='chart' @ready='handleChartReady'  />
+        <echart class='chart' ref='chart' @ready='handleChartReady'></echart>〔方案選單〕
     </div>
 </template>
 
